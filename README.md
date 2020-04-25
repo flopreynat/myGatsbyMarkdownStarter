@@ -6,7 +6,7 @@ The starter includes:
 - Pages for home, about, contact, blog and 404 (+ generated page/blog post)
 - sass (modules) turned on
 - 2 dummy posts, including one with an image
-- the dotenv environment variable file for GraphQL Playground_
+- the dotenv environment variable file for GraphQL Playground
 
 1. Fork
 2. run following installs
@@ -17,6 +17,6 @@ The starter includes:
     5. npm install --save gatsby-transformer-remark
     6. npm install gatsby-plugin-sharp gatsby-remark-images gatsby-remark-relative-images
     7. npm install gatsby-plugin-react-helmet react-helmet
-3. change the develop line in your package.json to "develop": _"env-cmd -f .env.development gatsby develop"_
+3. change the develop line in your package.json to "develop": _"env-cmd -f .env gatsby develop"_
 4. uncomment the dotenv environment variable file in the _.gitignore_
 5. done
