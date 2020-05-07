@@ -1,10 +1,14 @@
 const path = require('path')
+const { createFilePath } = require('gatsby-source-filesystem')
 
-module.exports.onCreateNode = ({ node, actions }) => {
+const PostTemplate = path.resolve('./src/templates/post-template.js')
+const BlogTemplate = path.resolve('./src/templates/blog-template.js')
+
+exports.onCreateNode = ({ node, getNode, actions }) => {
     const { createNodeField } = actions
 
     if (node.internal.type === 'MarkdownRemark') {
-        const slug = path.basename(node.fileAbsolutePath, '.md')
+        const slug = createFilePath({ node, getNode, basePath: 'posts' })
         
         createNodeField({
             node,
@@ -14,11 +18,10 @@ module.exports.onCreateNode = ({ node, actions }) => {
     }
 }
 
-module.exports.createPages = async ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions }) => {
     const { createPage } = actions
-    const blogTemplate = path.resolve('./src/templates/blog.js')
-    const res = await graphql(`
-        query {
+    const result = await graphql(`
+        {
             allMarkdownRemark {
                 edges {
                     node {
@@ -31,12 +34,34 @@ module.exports.createPages = async ({ graphql, actions }) => {
         }
     `)
 
-    res.data.allMarkdownRemark.edges.forEach((edge) => {
+    const posts = result.data.allMarkdownRemark.edges
+    posts.forEach(({ node: post }) => {
         createPage({
-            component: blogTemplate,
-            path: `/blog/${edge.node.fields.slug}`,
+            path: `posts${post.fields.slug}`,
+            component: PostTemplate,
             context: {
-                slug: edge.node.fields.slug
+                slug: post.fields.slug,
+            },
+        })
+    })
+
+        const postsPerPage = 2
+        const totalPages = Math.ceil(posts.length / postsPerPage)
+        Array.from({ length: totalPages }).forEach((_, index) => {
+        const currentPage = index + 1
+        const isFirstPage = index === 0
+        const isLastPage = currentPage === totalPages
+
+        createPage({
+            path: isFirstPage ? '/blog' : `/blog/${currentPage}`,
+            component: BlogTemplate,
+            context: {
+                limit: postsPerPage,
+                skip: index * postsPerPage,
+                isFirstPage,
+                isLastPage,
+                currentPage,
+                totalPages
             }
         })
     })
