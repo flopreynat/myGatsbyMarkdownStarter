@@ -4,19 +4,17 @@ My Gatsby starter site based upon Gatsby's hello-world boilerplate, and prepared
 
 The starter includes:
 - Pages for home, about, contact and 404
-- a blog section with
-    - a  blog post list page
-    - pagination (as defined by 'pospostsPerPage' variable)
-    - an engine-generated page per blog post
+- a blog section with a list of blog posts
+- a calendar section with a list of events
+- 5 dummy posts (one event + 4 blog posts) and their engine-generated page
 - sass (modules) turned on
-- 4 dummy posts, including one with an image
 - the dotenv environment variable file for GraphQL Playground
 
 In order to use this starter:
 
-1. > gatsby new your-project-name https://github.com/flopreynat/myGatsbyMarkdownStarter
-2. > cd your-project-name
-3. > gatsby develop
+1. gatsby new your-project-name https://github.com/flopreynat/myGatsbyMarkdownStarter
+2. cd your-project-name
+3. gatsby develop
 4. uncomment the dotenv environment variable file in the _.gitignore_ (see GraphQL Playground comment above)
 
 Note that the following installs were run on top of [Gatsby's Hello World Starter](https://github.com/gatsbyjs/gatsby-starter-hello-world)
