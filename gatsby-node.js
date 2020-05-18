@@ -1,14 +1,10 @@
 const path = require('path')
-const { createFilePath } = require('gatsby-source-filesystem')
 
-const PostTemplate = path.resolve('./src/templates/post-template.js')
-const BlogTemplate = path.resolve('./src/templates/blog-template.js')
-
-exports.onCreateNode = ({ node, getNode, actions }) => {
+module.exports.onCreateNode = ({ node, actions }) => {
     const { createNodeField } = actions
 
     if (node.internal.type === 'MarkdownRemark') {
-        const slug = createFilePath({ node, getNode, basePath: 'posts' })
+        const slug = path.basename(node.fileAbsolutePath, '.md')
         
         createNodeField({
             node,
@@ -18,15 +14,19 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     }
 }
 
-exports.createPages = async ({ graphql, actions }) => {
+module.exports.createPages = async ({ graphql, actions }) => {
     const { createPage } = actions
-    const result = await graphql(`
-        {
+    const blogTemplate = path.resolve('./src/templates/post-template.js')
+    const res = await graphql(`
+        query {
             allMarkdownRemark {
                 edges {
                     node {
                         fields {
                             slug
+                        }
+                        frontmatter {
+                            type
                         }
                     }
                 }
@@ -34,34 +34,12 @@ exports.createPages = async ({ graphql, actions }) => {
         }
     `)
 
-    const posts = result.data.allMarkdownRemark.edges
-    posts.forEach(({ node: post }) => {
+    res.data.allMarkdownRemark.edges.forEach((edge) => {
         createPage({
-            path: `posts${post.fields.slug}`,
-            component: PostTemplate,
+            component: blogTemplate,
+            path: `/${edge.node.frontmatter.type}/${edge.node.fields.slug}`,
             context: {
-                slug: post.fields.slug,
-            },
-        })
-    })
-
-        const postsPerPage = 2
-        const totalPages = Math.ceil(posts.length / postsPerPage)
-        Array.from({ length: totalPages }).forEach((_, index) => {
-        const currentPage = index + 1
-        const isFirstPage = index === 0
-        const isLastPage = currentPage === totalPages
-
-        createPage({
-            path: isFirstPage ? '/blog' : `/blog/${currentPage}`,
-            component: BlogTemplate,
-            context: {
-                limit: postsPerPage,
-                skip: index * postsPerPage,
-                isFirstPage,
-                isLastPage,
-                currentPage,
-                totalPages
+                slug: edge.node.fields.slug
             }
         })
     })
