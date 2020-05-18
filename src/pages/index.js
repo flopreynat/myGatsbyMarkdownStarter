@@ -51,7 +51,7 @@ const IndexPage = () => {
                     <h4>Latest Blog Post</h4>
                     {data.blog.edges.map((edge) => {
                         return (
-                            <Link to={`${edge.node.frontmatter.type}${edge.node.fields.slug}`}>
+                            <Link to={`${edge.node.frontmatter.type}/${edge.node.fields.slug}`}>
                                 <h5>{edge.node.frontmatter.title}</h5>
                             </Link>
                         )
@@ -61,7 +61,7 @@ const IndexPage = () => {
                     <h4>Latest Event</h4>
                     {data.event.edges.map((edge) => {
                         return (
-                            <Link to={`${edge.node.frontmatter.type}${edge.node.fields.slug}`}>
+                            <Link to={`${edge.node.frontmatter.type}/${edge.node.fields.slug}`}>
                                 <h5>{edge.node.frontmatter.title}</h5>
                             </Link>
                         )

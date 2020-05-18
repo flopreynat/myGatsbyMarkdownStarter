@@ -3,10 +3,14 @@
 My Gatsby starter site based upon Gatsby's hello-world boilerplate, and prepared for Markdown usage, initially coded thanks to Andrew Mead's [Great Gatsby Bootcamp](https://www.youtube.com/watch?v=8t0vNu2fCCM), before moving to a more advanced version.
 
 The starter includes:
-- Pages for home, about, contact and 404
+- Pages for:
+    - home including the latest blog post and event
+    - about
+    - contact
+    - 404
 - a blog section with a list of blog posts
 - a calendar section with a list of events
-- 5 dummy posts (one event + 4 blog posts) and their engine-generated page
+- 5 dummy posts (1 event + 4 blog posts including one with an image) and their engine-generated page
 - sass (modules) turned on
 - the dotenv environment variable file for GraphQL Playground
 
