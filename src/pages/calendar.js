@@ -1,6 +1,7 @@
-import React from 'react'
-import { Link, graphql, useStaticQuery } from 'gatsby'
-import Layout from '../components/layout'
+import React from 'react';
+import { Link, graphql, useStaticQuery } from 'gatsby';
+import Layout from '../components/layout';
+import Head from "../components/head";
 
 const BlogPage = () => {
     const data = useStaticQuery(graphql`
@@ -28,6 +29,7 @@ const BlogPage = () => {
 
     return (
         <Layout>
+            <Head title="Calendar"/>
             <h1>Calendar</h1>
             <ol>
                 {data.allMarkdownRemark.edges.map((edge) => {

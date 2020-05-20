@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, graphql } from "gatsby";
 import Layout from "../components/layout";
+import Head from "../components/head";
 
 export default class BlogList extends React.Component {
   render() {
@@ -12,6 +13,7 @@ export default class BlogList extends React.Component {
     const posts = this.props.data.allMarkdownRemark.edges
     return (
       <Layout>
+        <Head title="Blog"/>
         {posts.map(({ node }) => {
           const title = node.frontmatter.title || node.fields.slug
           return <div key={node.fields.slug}>
