@@ -8,7 +8,7 @@ The starter includes:
     - about
     - contact
     - 404
-- a blog section with a list of blog posts
+- a blog section with a (paginated) list of blog posts
 - a calendar section with a list of events
 - 5 dummy posts (1 event + 4 blog posts including one with an image) and their engine-generated page
 - sass (modules) turned on
